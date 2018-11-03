@@ -36,12 +36,13 @@ public class GoldAlignDetector extends DogeCVDetector {
     // Results of the detector
     private boolean found    = false; // Is the gold mineral found
     private boolean aligned  = false; // Is the gold mineral aligned
-    private double  goldXPos = 0;     // X Position (in pixels) of the gold element
+    private double goldXPos  = 0;     // X Position (in pixels) of the gold element
+    private double alignX    = 0;     // Returns the center of the screen in pixels
 
     // Detector settings
     public boolean debugAlignment = true; // Show debug lines to show alignment settings
     public double alignPosOffset  = 0;    // How far from center frame is aligned
-    public double alignSize       = 100;  // How wide is the margin of error for alignment
+    public double alignSize       = 25;  // How wide is the margin of error for alignment
 
     public DogeCV.AreaScoringMethod areaScoringMethod = DogeCV.AreaScoringMethod.MAX_AREA; // Setting to decide to use MaxAreaScorer or PerfectAreaScorer
 
@@ -101,7 +102,7 @@ public class GoldAlignDetector extends DogeCVDetector {
         }
 
         // Vars to calculate the alignment logic.
-        double alignX    = (getAdjustedSize().width / 2) + alignPosOffset; // Center point in X Pixels
+        alignX    = (getAdjustedSize().width / 2) + alignPosOffset; // Center point in X Pixels
         double alignXMin = alignX - (alignSize / 2); // Min X Pos in pixels
         double alignXMax = alignX +(alignSize / 2); // Max X pos in pixels
         double xPos; // Current Gold X Pos
@@ -178,7 +179,7 @@ public class GoldAlignDetector extends DogeCVDetector {
 
     /**
      * Returns if the gold element is aligned
-     * @return if the gold element is alined
+     * @return if the gold element is aligned
      */
     public boolean getAligned(){
         return aligned;
@@ -198,5 +199,13 @@ public class GoldAlignDetector extends DogeCVDetector {
      */
     public boolean isFound() {
         return found;
+    }
+
+    /**
+     * Returns The center position of the screen
+     * @return The center position of the screen in pixels
+     */
+    public double getScreenXCenter() {
+        return alignX;
     }
 }
